@@ -1,6 +1,7 @@
 import urllib,json
 
 charset="utf8"
+banned_mark=["\\","/",":","*","?","\"","<",">","|"]
 with open("plts.txt","r") as playlist_file:
 	ss=playlist_file.readlines()
 plts=[]
@@ -14,8 +15,12 @@ for plt in plts:
 	html_file=f.read().decode("UTF-8")
 	json_obj=json.loads(html_file)
 	songs=json_obj["result"]["tracks"]
+	
+	file_name=json_obj["result"]["name"];
+	for mark in banned_mark:
+		file_name.replace(mark,"");
 
-	with open("%s.txt"%(json_obj["result"]["name"]),"w") as fp:
+	with open("%s.txt"%(file_name),"w") as fp:
 		fp.write("%s\n"%(u"\u6B4C\u66F2\u6807\u9898".encode(charset)))
 		fp.write("%s\n"%(u"\u65F6\u957F".encode(charset)))
 		fp.write("%s\n"%(u"\u6B4C\u624B".encode(charset)))
