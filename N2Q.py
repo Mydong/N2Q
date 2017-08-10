@@ -18,7 +18,7 @@ for plt in plts:
 	
 	file_name=json_obj["result"]["name"];
 	for mark in banned_mark:
-		file_name.replace(mark,"");
+		file_name=file_name.replace(mark,"");
 
 	with open("%s.txt"%(file_name),"w") as fp:
 		fp.write("%s\n"%(u"\u6B4C\u66F2\u6807\u9898".encode(charset)))
