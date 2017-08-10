@@ -1,4 +1,4 @@
-import urllib,json
+import httplib,json
 
 charset="utf8"
 banned_mark=["\\","/",":","*","?","\"","<",">","|"]
@@ -10,10 +10,20 @@ for s in ss:
 	if(pos!=-1):
 		pos+=12
 		s=s.replace("\n","")
-		plts.append("http://music.163.com/api/playlist/detail?id=%s"%(s[pos:]))
+		#plts.append("http://music.163.com/api/playlist/detail?id=%s"%(s[pos:]))
+		plts.append("/api/playlist/detail?id=%s"%(s[pos:]))
 for plt in plts:
-	f=urllib.urlopen(str(plt))
-	html_file=f.read().decode("UTF-8")
+	conn = httplib.HTTPConnection("music.163.com")  
+	conn.request("GET", str(plt))  
+	r1 = conn.getresponse()
+	html_file=r1.read().decode(charset)
+	conn.close()
+	#req = urllib2.Request(str(plt))
+	#res = urllib2.urlopen(req)
+	#res=res.read()
+	#html_file=res.decode(charset)
+	#f=urllib.urlopen(str(plt))
+	#html_file=f.read().decode(charset)
 	json_obj=json.loads(html_file)
 	songs=json_obj["result"]["tracks"]
 	
