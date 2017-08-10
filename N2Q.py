@@ -9,7 +9,8 @@ for s in ss:
 	pos=s.find("playlist?id=");
 	if(pos!=-1):
 		pos+=12
-		plts.append("http://music.163.com/api/playlist/detail?id=%s"%(s[pos:-1]))
+		s=s.replace("\n","")
+		plts.append("http://music.163.com/api/playlist/detail?id=%s"%(s[pos:]))
 for plt in plts:
 	f=urllib.urlopen(str(plt))
 	html_file=f.read().decode("UTF-8")
